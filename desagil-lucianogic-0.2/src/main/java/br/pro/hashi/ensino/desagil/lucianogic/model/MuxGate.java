@@ -37,13 +37,13 @@ public class MuxGate extends Gate {
 			nandGate.connect(sel, 1);
 			
 			nandGate2.connect(a, 0);
-			nandGate2.connect(new MockEmitter(nandGate.read()), 1);
+			nandGate2.connect(nandGate, 1);
 			
 			nandGate3.connect(sel, 0);
 			nandGate3.connect(b, 1);
 			
-			nandGate4.connect(new MockEmitter(nandGate2.read()), 0);
-			nandGate4.connect(new MockEmitter(nandGate3.read()), 1);
+			nandGate4.connect(nandGate2, 0);
+			nandGate4.connect(nandGate3, 1);
 			
 			
 		}

@@ -33,13 +33,13 @@ public class XorGate extends Gate {
 			b = emitter;
 			
 			nandGate2.connect(a, 0);
-			nandGate2.connect(new MockEmitter(nandGate.read()), 1);
+			nandGate2.connect(nandGate, 1);
 			
-			nandGate3.connect(new MockEmitter(nandGate.read()), 0);
+			nandGate3.connect(nandGate, 0);
 			nandGate3.connect(b, 1);
 			
-			nandGate4.connect(new MockEmitter(nandGate2.read()), 0);
-			nandGate4.connect(new MockEmitter(nandGate3.read()), 1);
+			nandGate4.connect(nandGate2, 0);
+			nandGate4.connect(nandGate3, 1);
 		}
 		
 		
