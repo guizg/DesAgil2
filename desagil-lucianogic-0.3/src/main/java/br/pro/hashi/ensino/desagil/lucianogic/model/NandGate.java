@@ -5,6 +5,7 @@ public class NandGate extends Gate {
 
 	public NandGate() {
 		super(2);
+		name = "Nand";
 		emitters = new Emitter[2];
 	}
 

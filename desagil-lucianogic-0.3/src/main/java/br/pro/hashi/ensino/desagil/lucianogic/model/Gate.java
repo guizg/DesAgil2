@@ -2,9 +2,15 @@ package br.pro.hashi.ensino.desagil.lucianogic.model;
 
 public abstract class Gate implements Receiver, Emitter {
 	private int size;
+	protected String name;
 
 	protected Gate(int size) {
 		this.size = size;
+	}
+	
+	// O menu mostra a string devolvida por esse metodo.
+	public String toString() {
+		return name;
 	}
 
 	@Override

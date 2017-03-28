@@ -35,8 +35,8 @@ public class GateView extends JPanel implements ItemListener{
 	public GateView(Gate gate) {
 		this.gate = gate;
 		
-	    Switch pino1 = new Switch();
-	    Switch pino2 = new Switch();
+	    pino1 = new Switch();
+	    pino2 = new Switch();
 
 		// A componente JLabel representa simplesmente um texto fixo.
 		// https://docs.oracle.com/javase/tutorial/uiswing/components/label.html
@@ -89,23 +89,27 @@ public class GateView extends JPanel implements ItemListener{
 	public void itemStateChanged(ItemEvent e) {
 	    Object source = e.getItemSelectable();
 	    
-	    if (source == entrada1) {
-	    	entrada1.setSelected(true);
-	    	pino1.setOn(true);
-	    } else if (source == entrada2) {
-	    	entrada2.setSelected(true);
-	    	pino2.setOn(true);
-	    }
-
+	    
 	    if (e.getStateChange() == ItemEvent.DESELECTED){
 	    	if (source == entrada1) {
-		    	entrada1.setSelected(false);
+		    	//entrada1.setSelected(true);
 		    	pino1.setOn(false);
 		    } else if (source == entrada2) {
-		    	entrada2.setSelected(false);
+		    	//entrada2.setSelected(true);
 		    	pino2.setOn(false);
 		    }
+	    }else{
+	    	if (source == entrada1) {
+		    	//entrada1.setSelected(false);
+		    	pino1.setOn(true);
+		    } else if (source == entrada2) {
+		    	//entrada2.setSelected(false);
+		    	pino2.setOn(true);
+		    }
 	    }
+	    
+	    System.out.println(pino1.read());
+	    System.out.println(pino2.read());
 	    
 	    gate.connect(pino1, 0);
 	    gate.connect(pino2, 1);
