@@ -25,9 +25,12 @@ public class GateView extends JPanel implements ItemListener{
 	// https://docs.oracle.com/javase/tutorial/uiswing/components/textfield.html
 	private	JCheckBox entrada1;
 	private	JCheckBox entrada2;
+	private	JCheckBox entrada3;
 	private JCheckBox saida;
 	private Switch pino1;
 	private Switch pino2;
+	private Switch pino3;
+	private int size;
 
 	private Gate gate;
 
@@ -35,8 +38,10 @@ public class GateView extends JPanel implements ItemListener{
 	public GateView(Gate gate) {
 		this.gate = gate;
 		
+		size = gate.getSize();
 	    pino1 = new Switch();
 	    pino2 = new Switch();
+	    pino3 = new Switch();
 
 		// A componente JLabel representa simplesmente um texto fixo.
 		// https://docs.oracle.com/javase/tutorial/uiswing/components/label.html
@@ -52,6 +57,11 @@ public class GateView extends JPanel implements ItemListener{
 		entrada2.setMnemonic(KeyEvent.VK_G); 
 	    entrada2.setSelected(false);
 	    entrada2.addItemListener(this);
+	    
+	    entrada3 = new JCheckBox();
+		entrada3.setMnemonic(KeyEvent.VK_G); 
+	    entrada3.setSelected(false);
+	    entrada3.addItemListener(this);
 	    
 		saida = new JCheckBox();
 		saida.setMnemonic(KeyEvent.VK_H); 
@@ -76,12 +86,53 @@ public class GateView extends JPanel implements ItemListener{
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
 		/* A PARTIR DESTE PONTO VOCE DEVE ENTENDER SOZINHO */
-
-		add(entradasLabel);
-		add(entrada1);
-		add(entrada2);
-		add(saidasLabel);
-		add(saida);
+		if(size == 1){
+			add(entradasLabel);
+			add(entrada1);
+			add(saidasLabel);
+			add(saida);
+			
+			//atualiza com entrada 0
+			gate.connect(pino1, 0);
+			if(gate.read() == true){
+		    	saida.setSelected(true);
+		    }else{
+		    	saida.setSelected(false);
+		    }
+			
+		}else if(size == 2){
+			add(entradasLabel);
+			add(entrada1);
+			add(entrada2);
+			add(saidasLabel);
+			add(saida);
+			
+			gate.connect(pino1, 0);
+			gate.connect(pino2, 1);
+			if(gate.read() == true){
+		    	saida.setSelected(true);
+		    }else{
+		    	saida.setSelected(false);
+		    }
+			
+		}else{
+			add(entradasLabel);
+			add(entrada1);
+			add(entrada2);
+			add(entrada3);
+			add(saidasLabel);
+			add(saida);
+			
+			gate.connect(pino1, 0);
+			gate.connect(pino2, 1);
+			gate.connect(pino3, 2);
+			if(gate.read() == true){
+		    	saida.setSelected(true);
+		    }else{
+		    	saida.setSelected(false);
+		    }
+		}
+		
 
 	}
 	
@@ -89,30 +140,72 @@ public class GateView extends JPanel implements ItemListener{
 	public void itemStateChanged(ItemEvent e) {
 	    Object source = e.getItemSelectable();
 	    
-	    
-	    if (e.getStateChange() == ItemEvent.DESELECTED){
-	    	if (source == entrada1) {
-		    	//entrada1.setSelected(true);
-		    	pino1.setOn(false);
-		    } else if (source == entrada2) {
-		    	//entrada2.setSelected(true);
-		    	pino2.setOn(false);
+	    if(size == 1){
+	    	if (e.getStateChange() == ItemEvent.DESELECTED){
+		    	if (source == entrada1) {
+			    	//entrada1.setSelected(true);
+			    	pino1.setOn(false);
+		    	}
+		    }else{
+		    	if (source == entrada1) {
+			    	//entrada1.setSelected(false);
+			    	pino1.setOn(true);
+			    }
 		    }
-	    }else{
-	    	if (source == entrada1) {
-		    	//entrada1.setSelected(false);
-		    	pino1.setOn(true);
-		    } else if (source == entrada2) {
-		    	//entrada2.setSelected(false);
-		    	pino2.setOn(true);
+		    gate.connect(pino1, 0);
+		    
+		}else if(size == 2){
+			if (e.getStateChange() == ItemEvent.DESELECTED){
+		    	if (source == entrada1) {
+			    	//entrada1.setSelected(true);
+			    	pino1.setOn(false);
+			    } else if (source == entrada2) {
+			    	//entrada2.setSelected(true);
+			    	pino2.setOn(false);
+			    }
+		    }else{
+		    	if (source == entrada1) {
+			    	//entrada1.setSelected(false);
+			    	pino1.setOn(true);
+			    } else if (source == entrada2) {
+			    	//entrada2.setSelected(false);
+			    	pino2.setOn(true);
+			    }
 		    }
-	    }
+
+		    
+		    gate.connect(pino1, 0);
+		    gate.connect(pino2, 1);
+		}else{
+			if (e.getStateChange() == ItemEvent.DESELECTED){
+		    	if (source == entrada1) {
+			    	//entrada1.setSelected(true);
+			    	pino1.setOn(false);
+			    } else if (source == entrada2) {
+			    	//entrada2.setSelected(true);
+			    	pino2.setOn(false);
+			    } else if (source == entrada3) {
+			    	//entrada2.setSelected(true);
+			    	pino3.setOn(false);
+			    }
+		    }else{
+		    	if (source == entrada1) {
+			    	//entrada1.setSelected(false);
+			    	pino1.setOn(true);
+			    } else if (source == entrada2) {
+			    	//entrada2.setSelected(false);
+			    	pino2.setOn(true);
+			    } else if (source == entrada3) {
+			    	//entrada2.setSelected(false);
+			    	pino3.setOn(true);
+			    }
+		    }
+
+		    gate.connect(pino1, 0);
+		    gate.connect(pino2, 1);
+		    gate.connect(pino3, 2);
+		}
 	    
-	    System.out.println(pino1.read());
-	    System.out.println(pino2.read());
-	    
-	    gate.connect(pino1, 0);
-	    gate.connect(pino2, 1);
 	    
 	    if(gate.read() == true){
 	    	saida.setSelected(true);

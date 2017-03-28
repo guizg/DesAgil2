@@ -20,6 +20,10 @@ public abstract class Gate implements Receiver, Emitter {
 		}
 		doConnect(emitter, index);
 	}
-
+	
+	public int getSize(){
+		return size;
+	}
+	
 	protected abstract void doConnect(Emitter emitter, int index);
 }
